@@ -164,33 +164,33 @@ $ cd apache-airflow
 /apache-airflow$ cp docker-compose.yaml docker-compose.yaml.bak
 ```
 \
-7. Fill the contents of `airflow.cfg` and `docker-compose.yaml` with the contents from the respective files available in this repository OR make the necessary changes as described below.
+7. Fill the contents of `airflow.cfg` and `docker-compose.yaml` with the contents from the respective files available in this repository OR make the necessary changes as described below.  
 \
-Now, we need to make some changes in parameters within `airflow.cfg` . I suggest you read the parameters and their descriptions in your free time to configure airflow to your liking.
+Now, we need to make some changes in parameters within `airflow.cfg` . I suggest you read the parameters and their descriptions in your free time to configure airflow to your liking.  
 \
-FYI: You can also parse parameters to `docker-compose.yaml` under common or service-specific environment variables. To define attibutes in `docker-compose.yaml` , use the pattern {AIRFLOW}{DOUBLE_UNDERSCORE}{SERVICE}{DOUBLE_UNDERSCORE}{PARAMETER}, e.g., `AIRFLOW__CORE__LOAD_EXAMPLES` . However, the parameter values defined in `airflow.cfg` will take precedence, aka have higher priority, over the parameters defined in `docker-compose.yaml` .
+FYI: You can also parse parameters to `docker-compose.yaml` under common or service-specific environment variables. To define attibutes in `docker-compose.yaml` , use the pattern {AIRFLOW}{DOUBLE_UNDERSCORE}{SERVICE}{DOUBLE_UNDERSCORE}{PARAMETER}, e.g., `AIRFLOW__CORE__LOAD_EXAMPLES` . However, the parameter values defined in `airflow.cfg` will take precedence, aka have higher priority, over the parameters defined in `docker-compose.yaml` .  
 \
-8. Under `[webserver]`, change `default_timezone` to your timezone (e.g., UTC+1).
+8. Under `[webserver]`, change `default_timezone` to your timezone (e.g., UTC+1).  
 \
-9. Under `[webserver]`, change `default_ui_timezone` to your timezone.
+9. Under `[webserver]`, change `default_ui_timezone` to your timezone.  
 \
-10. Under `[webserver]`, add `rbac = true` to enable Role-Based Access Control security feature.
+10. Under `[webserver]`, add `rbac = true` to enable Role-Based Access Control security feature.  
 \
-11. Under `[scheduler]`, change `parallelism = 4` to limit concurrent amount of DAG tasks being run. We don't need more than 4 at this time. You can change back to default number later.
+11. Under `[scheduler]`, change `parallelism = 4` to limit concurrent amount of DAG tasks being run. We don't need more than 4 at this time. You can change back to default number later.  
 \
 12. Under `[scheduler]`, change `dag_dir_list_interval = 30` to change the time interval the scheduler scans `/dag` directory for new dags. 300sec is good for production, but not for development.  
 \
-13. Under `[core]`, change `max_active_tasks_per_dag = 4` to limit maximum active tasks per DAG. We don't need more than 4 at this time. You can change back to default number later.
+13. Under `[core]`, change `max_active_tasks_per_dag = 4` to limit maximum active tasks per DAG. We don't need more than 4 at this time. You can change back to default number later.  
 \
-14. Under `[core]`, change `max_active_runs_per_dag = 4` to limit maximum concurent runs of one DAG. We don't need more than 4 at this time. You can change back to default number later.
+14. Under `[core]`, change `max_active_runs_per_dag = 4` to limit maximum concurent runs of one DAG. We don't need more than 4 at this time. You can change back to default number later.  
 \
-15. Under `[core]`, change `load_examples = False` to disable load of "example" DAGs on startup. We don't need example DAGs.
+15. Under `[core]`, change `load_examples = False` to disable load of "example" DAGs on startup. We don't need example DAGs.  
 \
-16. Under `[secrets]`, change `backend = airflow.providers.hashicorp.secrets.vault.VaultBackend` to enable Vault as secrets backend.
+16. Under `[secrets]`, change `backend = airflow.providers.hashicorp.secrets.vault.VaultBackend` to enable Vault as secrets backend.  
 \
-17. Under `[secrets]`, change `backend_kwargs = {"auth_type":"userpass","username":"airflow","password":"airflow2023!","mount_point": "airflow","connections_path":"connections","variables_path": "variables","url": "http://172.26.0.2:8200"}` . We will authentical to Vault using userpass method. You can consult HashiCorp docs for additional methods: https://developer.hashicorp.com/vault/docs/auth . We use the credentials we created earlier. The mount point refers to the secrets engine. URL refers to the IP address and port of 19. Vault's for retrieval of secrets using API. To find your your Vault's container IP address, you can open Docker Desktop>Select Vault container that uses the hashicorp/vault:latest image>Inspect>Networks>"IPAddgress".
+17. Under `[secrets]`, change `backend_kwargs = {"auth_type":"userpass","username":"airflow","password":"airflow2023!","mount_point": "airflow","connections_path":"connections","variables_path": "variables","url": "http://172.26.0.2:8200"}` . We will authentical to Vault using userpass method. You can consult HashiCorp docs for additional methods: https://developer.hashicorp.com/vault/docs/auth . We use the credentials we created earlier. The mount point refers to the secrets engine. URL refers to the IP address and port of 19. Vault's for retrieval of secrets using API. To find your your Vault's container IP address, you can open Docker Desktop>Select Vault container that uses the hashicorp/vault:latest image>Inspect>Networks>"IPAddgress".  
 \
-18. Under `[celery]`, change `worker_concurrency = 4` to define the amount of tasks a celery worker can take. For development purpose, we don't need more than 4.
+18. Under `[celery]`, change `worker_concurrency = 4` to define the amount of tasks a celery worker can take. For development purpose, we don't need more than 4.  
 \
 
 FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate there using Docket Desktop and download these files in original configuration.
