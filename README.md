@@ -163,6 +163,7 @@ $ cd apache-airflow
 /apache-airflow$ cp config/airflow.cfg config/airflow.cfg.bak
 /apache-airflow$ cp docker-compose.yaml docker-compose.yaml.bak
 ```
+\
 7. Fill the contents of `airflow.cfg` and `docker-compose.yaml` with the contents from the respective files available in this repository OR make the necessary changes as described below.
 \
 Now, we need to make some changes in parameters within `airflow.cfg` . I suggest you read the parameters and their descriptions in your free time to configure airflow to your liking.
