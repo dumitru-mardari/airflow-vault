@@ -8,14 +8,14 @@ Part | Title
 3| Configuring Apache Airflow 
 4| Create Extract, Transform and Load task using DAGs 
 
-## Setup environment
+## 1. Setup environment
 - Virtual machine - Linux x86_64 Architecture - Linux Mint 21.2 Distribution
 - Allocated RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD (80 GB not enough), GPU 8GB, Network connection: NAT
 - Installed Docker Compose v2.22.0
 - Installed Docker Desktop v4.24.0 (122432). CPU limit: 8 cores; Memory Limit: 4.5 GB, Swap: 1 GB
 - Installed Python 3.10.12 (`python3 --version`)  
 
-## Configuring HashiCorp Vault deployment using Docker
+## 2. Configuring HashiCorp Vault deployment using Docker
 1. Create a Vault project directory - `/vault`.
 ```
 $ mkdir vault
@@ -122,7 +122,7 @@ FYI 2: By default, every time you switch off the Vault container, the Vault gets
 \
 Now, you've completed configuring your HashiCorp Vault instance. In the next step, we will start configuring Apache Airflow to securely retrieve secrets from the Vault.  
   
-## Configuring Apache Airflow
+## 3. Configuring Apache Airflow
 
 1. In your projects directory, create a new directory for Apache Airflow.
 ```
@@ -200,7 +200,7 @@ FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cf
 \
 Now, we've setup the Airflow service and we're ready to create the necessary DAGs for the ETL workflow (Extract data from S3, Transform data using Python, Load data into Amazon Redshift DWH).  
 
-## Create Extract, Transform and Load task using DAGs
+## 4. Create Extract, Transform and Load task using DAGs
 
 In this chapter, we create the DAG for defining the ETL workflow described above.
 
