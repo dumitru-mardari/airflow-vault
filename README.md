@@ -196,10 +196,10 @@ FYI: You can also parse parameters to `docker-compose.yaml` under common or serv
 \
 The Airflow UI should be accessible at: http://localhost:8080/ . Login using default credentials username: `airflow` and password: `airflow` .  
 \
-FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate there using Docket Desktop and download these files in original configuration.  
+FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate to this path using Docker Desktop and download these files in original configuration.  
 \
 Now, we've setup the Airflow service and we're ready to create the necessary DAGs for the ETL workflow (Extract data from S3, Transform data using Python, Load data into Amazon Redshift DWH).  
-\
+
 ## Create Extract, Transform and Load task using DAGs
 
 
