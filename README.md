@@ -17,7 +17,7 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 \
 ## Configuring HashiCorp Vault deployment using Docker
 1. Create a Vault project directory - `/vault`.
-```
+```bash
 $ mkdir vault
 ```
 \
@@ -201,5 +201,23 @@ FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cf
 Now, we've setup the Airflow service and we're ready to create the necessary DAGs for the ETL workflow (Extract data from S3, Transform data using Python, Load data into Amazon Redshift DWH).  
 
 ## Create Extract, Transform and Load task using DAGs
+
+In this chapter, we create the DAG for defining the ETL workflow described above.
+
+The necessary imports are described below:
+```python
+import os # to rename downloaded file from S3 Bucket
+import psycopg2 # to connect to PostgreSQL in case of uploading data to a local DB instead of AWS Redshift DWH
+import psycopg2.extras # to access the data in the dataframe using cursor object
+import logging # for logging and debugging purposes
+from airflow import DAG # DAG
+from airflow.operators.python import PythonOperator # Python operator to manipulate data
+from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor # AWS S3 Sensor sensing for existing or new files in a S3 bucket
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook # AWS S3 Hook for hooking the file
+from datetime import datetime, timedelta # for working with data
+from airflow.hooks.base_hook import BaseHook # to retrieve secret AWS connection credentials from HashiCorp Vault
+from airflow.models.connection import Connection # to create a connection at runtime
+```
+
 
 
