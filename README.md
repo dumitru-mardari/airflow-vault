@@ -1,4 +1,4 @@
-# Apache Airflow with HashiCorp Vault
+# Apache Airflow with HashiCorp Vault integration
 This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2.
 
 #Contents
