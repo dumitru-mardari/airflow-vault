@@ -127,6 +127,7 @@ FYI 2: By default, every time you switch off the Vault container, the Vault gets
 Now, you've completed configuring your HashiCorp Vault instance. In the next step, we will start configuring Apache Airflow to securely retrieve secrets from the Vault.  
   
 ## Configuring Apache Airflow
+
 1. In your projects directory, create a new directory for Apache Airflow.
 ```
 /projects$ mkdir apache-airflow
@@ -192,7 +193,6 @@ FYI: You can also parse parameters to `docker-compose.yaml` under common or serv
 \
 18. Under `[celery]`, change `worker_concurrency = 4` to define the amount of tasks a celery worker can take. For development purpose, we don't need more than 4.  
 \
-
 FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate there using Docket Desktop and download these files in original configuration.
 
 
