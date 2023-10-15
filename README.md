@@ -1,9 +1,12 @@
 # Apache Airflow with HashiCorp Vault integration
 This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2.
+The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager.
+The secret AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing.
+Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose files.
 
 ## Contents
-| Part | Title |
 |-|-|
+| Part | Title |
 |  1  | Setup |
 |  2  | Configuring Docker Desktop |
 |  3  | Configuring HashiCorp Vault |
