@@ -18,7 +18,11 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 - Installed Python 3.10.12 (`python3 --version`)
 
 ## Configuring HashiCorp Vault
-
+1. Create your directory for HashiCorp Vault.
+```
+mkdir vault
+```
+3. 
 ## Configuring Apache Airflow
 ```
 
