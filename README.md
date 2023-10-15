@@ -13,10 +13,9 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 - Virtual machine - Linux - Linux Mint 21.2 Distribution
 - RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD (80 GB not enough), GPU 8GB, Network connection: NAT
 - Installed Docker Compose v2.22.0
-- Installed Docker Desktop v4.24.0 (122432). CPU limit: 8 Cores, Memory Limit: 4.5 GB, Swap: 1 GB
+- Installed Docker Desktop v4.24.0 (122432). CPU limit: 8 cores; Memory Limit: 4.5 GB, Swap: 1 GB
 - Installed Python 3.10.12 (`python3 --version`)
-
-# ATTENTION! CURRENTLY IN DEVELOPMENT! DO NOT REPRODUCE STEPS!
+\
 ## Configuring HashiCorp Vault deployment using Docker
 1. Create a Vault project directory - `/vault`.
 ```
