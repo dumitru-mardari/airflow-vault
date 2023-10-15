@@ -5,13 +5,13 @@ The secret AWS Connections are used for connection to AWS Cloud for the purpose 
 Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose files.
 
 ## Contents
-|-|-|
 | Part | Title |
 |  1  | Setup |
 |  2  | Configuring Docker Desktop |
 |  3  | Configuring HashiCorp Vault |
 |  4  | Configuring Apache Airflow |
 |  5  | References |
+|-|-|
 
 ## Setup
 - Virtual machine - Linux - Linux Mint 21.2 Distribution
