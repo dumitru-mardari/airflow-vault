@@ -27,25 +27,21 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 $ mkdir vault
 ```
 </br>
-</br>
 2. Create "docker-compose.yml" file, "config" and "file" directories inside the /vault project directory.
 ```
 $ cd vault
 /vault$ touch docker-compose.yml
 /vault$ mkdir config file
 ```
-
-  
+</br>
 3. Enter /config directory and create "vault.hcl" file (configuration file for HashiCorp Vault).
 ```
 /vault$ cd config
 /vault$ touch vault.hcl
 ```
-
-  
+</br>
 4. Replace the contents of Vault's docker-compose.yml and vault.hcl with the ones from this repository.
-
-
+</br>
 5. Make sure that the /vault folder is having proper permissions and ownership. You must have full read and write access to all files in /vault dir, and have ownership over them. Right click /vault dir and check Properties>Permissions. If these are not correct, you can change them using the following commands.
 ```
 # This will change ownership of your /vault dir and all files within recursively to user: <your-username>, group: <your-username>
@@ -53,50 +49,39 @@ $ cd vault
 # This will change permissions for users and groups to read, write, access your /vault dir and all files within recursively
 /projects$ chmod -R +rwx vault && chmod -R g+rwx vault
 ```
-
-
+</br>
 6. From vault directory, run docker compose command to deploy Vault's docker container. This will deploy the container for latest HashiCorp Vault Docker image available in Docker Hub. All the outputs of deployment will be shown in the terminal. Do not press CTRL+C. This will interrupt the deployment of container.
 ```
 /vault$ docker compose up
 ```
-
-
+</br>
 7. After a while, Vault UI should be accessible in browser at: http://localhost:8200 . Access it.
-
-
+</br>
 8. Set number of "Key shares" and "Key threshold" to your preference (e.g., 1 and 1). Initialize it.
-
-
+</br>
 9. IMPORTANT! Copy your "Initial root token" and "Key 1 + any other keys" to a safe place. You can optionally download keys or save them to your host environment variables.
 ```
 $ export VAULT_TOKEN=<token>
 $ export VAILT_UNSEAL_KEY1=<key1>
 ```
-
-
+</br>
 10. Continue to unseal the vault by providing the "Unseal Key Portion".
-
-
+</br>
 11. Login to your vault using the initial root token (token of your vault's root user).
-
-
+</br>
 12. You might want to have access to vault using username/password combination, instead of token. For this, go to "Access" in the left pane in Vault's UI and click "Enable new method +" on the right side. Choose "Username & Password" option. We will also need it later for setting up a user for Apache Airflow. Click Next, "Enable Method" and "Update Options".
-
-
+</br>
 13. Click the newly appeared "userpass/" authentication method and "Create user +" from the window's right side. Insert username "root" and password "<your-password-of-choice>", and click "Save".
-
-
+</br>
 14. Create another user for Apache Airflow using the same procedure. Username "airflow" and pass "airflow2023!" will be used in further steps.
-
-
+</br>
 15. Now, we want to create new policies for our root and airflow users. Get back to main menu and click "Policies". Click "Create ACL Policy". For root user, name the policy "root-policy" and provide the following JSON code for the policy:
 ```
 path "*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 ```
-
-
+</br>
 16. For your airflow user, create a policy named "airflow" with the following code. This will allow airflow user to access only the "airflow" secrets-engine and all secrets stored within it.
 ```
 airflow:
@@ -104,8 +89,7 @@ path "airflow/*" {
   capabilities = ["read"]
 }
 ```
-
-
+</br>
 17. We now need to assign the policies to respective users. For this, you can use the terminal available in the menu. 
 ```
 # Assign policy for root user
@@ -113,11 +97,9 @@ vault write auth/userpass/users/root/policies policies="root-policy"
 # Assign policy for airflow user
 vault write auth/userpass/users/airflow/policies policies="airflow"
 ```
-
-
+</br>
 18. Now, we need to create the "airflow" secrets engine where we can store our secret connections (e.g., AWS Keys and Secret Keys) and variables. Click on "Secrets engines" from the left pane and "Enable new engine +". Select "KV" engine and click Next. Define "airflow" as Path and click Next.
-
-
+</br>
 19. Now, we can put our first connections and variables. For this purpose, we will insert a "smtp_default" secret connection, an AWS Key pair "aws_conn" connection and a "test_var" variable. Now, click on "Create secret +". For "Path of this secret", type "connections/aws_conn". In "Secret data", type the following:
 ```
 # Key - variable. Add new keys for login and password.
@@ -125,8 +107,7 @@ conn_type - aws
 login - <your AWS KEY>
 password - <your AWS SECRET KEY
 ```
-
-
+</br>
 20. Add an smtp_default secret connection on "connections/smtp_default" path using the same procedure. You can use it later for test purposes.
 ```
 conn_type - smtps
@@ -135,16 +116,16 @@ login - user
 password - host
 port - 465
 ```
-
-
+</br>
 21. Add a secret variable in "airflow" secrets engine. Again, using the same procedure, click on "Create Secret +", provide path "variables/test_var" and the secret pair:
 ```
 # Key - variable
 key - test123
 ```
-
+</br>
 Now, you've completed configuring your HashiCorp Vault instance. In the next step, we will start configuring Apache Airflow to securely retrieve secrets from the Vault.
-
+</br>
+</br>
 
 ## Configuring Apache Airflow
 ```
