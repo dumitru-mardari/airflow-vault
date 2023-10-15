@@ -26,20 +26,20 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 ```
 $ mkdir vault
 ```
-<br/>
+\
 2. Create "docker-compose.yml" file, "config" and "file" directories inside the /vault project directory.
 ```
 $ cd vault
 /vault$ touch docker-compose.yml
 /vault$ mkdir config file
 ```
-<br/>
+\
 3. Enter /config directory and create "vault.hcl" file (configuration file for HashiCorp Vault).
 ```
 /vault$ cd config
 /vault$ touch vault.hcl
 ```
-<br/>
+\
 4. Replace the contents of Vault's docker-compose.yml and vault.hcl with the ones from this repository.
 </br>
 5. Make sure that the /vault folder is having proper permissions and ownership. You must have full read and write access to all files in /vault dir, and have ownership over them. Right click /vault dir and check Properties>Permissions. If these are not correct, you can change them using the following commands.
