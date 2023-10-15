@@ -26,23 +26,20 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 ```
 $ mkdir vault
 ```
-
-
+  
 2. Create "docker-compose.yml" file, "config" and "file" directories inside the /vault project directory.
 ```
 $ cd vault
 /vault$ touch docker-compose.yml
 /vault$ mkdir config file
 ```
-
-
+  
 3. Enter /config directory and create "vault.hcl" file (configuration file for HashiCorp Vault).
 ```
 /vault$ cd config
 /vault$ touch vault.hcl
 ```
-
-
+  
 4. Replace the contents of Vault's docker-compose.yml and vault.hcl with the ones from this repository.
 
 
