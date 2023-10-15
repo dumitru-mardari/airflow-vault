@@ -9,6 +9,7 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 |2| Configuring HashiCorp Vault deployment using Docker |
 |3| Configuring Apache Airflow |
 |4| References |
+
 <br><br/>
 
 ## Setup environment
