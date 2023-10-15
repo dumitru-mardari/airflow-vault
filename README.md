@@ -18,11 +18,17 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 - Installed Python 3.10.12 (`python3 --version`)
 
 ## Configuring HashiCorp Vault
-1. Create your directory for HashiCorp Vault.
+1. Create directory for HashiCorp Vault in your project directory.
 ```
-mkdir vault
+$ mkdir vault
+```
+2. Create docker-compose.yml file inside the /vault directory.
+```
+$ cd vault
+/vault$ touch docker-compose.yml
 ```
 3. 
+4. 
 ## Configuring Apache Airflow
 ```
 
