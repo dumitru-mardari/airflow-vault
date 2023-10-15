@@ -1,12 +1,11 @@
-# Tutorial: Apache Airflow with HashiCorp Vault integration
-This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2. The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager. AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing. Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose files.
+# Apache Airflow with HashiCorp Vault integration
+This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2. The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager. AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing. Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose files. The steps to replicate this project are described below.
 ## Contents
 | Part | Title |
 |-|-|
 |1| Setup environment |
 |2| Configuring HashiCorp Vault deployment using Docker |
 |3| Configuring Apache Airflow |
-|4| References |
 ## Setup environment
 - Virtual machine - Linux - Linux Mint 21.2 Distribution
 - RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD (80 GB not enough), GPU 8GB, Network connection: NAT
@@ -184,14 +183,8 @@ FYI: You can also parse parameters to `docker-compose.yaml` under common or serv
 \
 16. Under `[secrets]`, change `backend = airflow.providers.hashicorp.secrets.vault.VaultBackend` to enable Vault as secrets backend.  
 \
-17. Under `[secrets]`, change `backend_kwargs = {"auth_type":"userpass","username":"airflow","password":"airflow2023!","mount_point": "airflow","connections_path":"connections","variables_path": "variables","url": "http://172.26.0.2:8200"}` . We will authentical to Vault using userpass method. You can consult HashiCorp docs for additional methods: https://developer.hashicorp.com/vault/docs/auth . We use the credentials we created earlier. The mount point refers to the secrets engine. URL refers to the IP address and port of 19. Vault's for retrieval of secrets using API. To find your your Vault's container IP address, you can open Docker Desktop>Select Vault container that uses the hashicorp/vault:latest image>Inspect>Networks>"IPAddgress".  
+17. Under `[secrets]`, change `backend_kwargs = {"auth_type":"userpass","username":"airflow","password":"airflow2023!","mount_point": "airflow","connections_path":"connections","variables_path": "variables","url": "http://172.26.0.2:8200"}` . We will authenticate to Vault using userpass method. You can consult HashiCorp docs for additional authentication methods and how to set them up: https://developer.hashicorp.com/vault/docs/auth . For userpass authetication method, we will use the credentials that we've created earlier. The mount point refers to the secrets engine. URL refers to the Vault's IP address and port for retrieval of secrets using API. To find your your Vault's container IP address, you can open Docker Desktop>Select Vault container that uses the hashicorp/vault:latest image>Inspect>Networks>"IPAddgress".  
 \
 18. Under `[celery]`, change `worker_concurrency = 4` to define the amount of tasks a celery worker can take. For development purpose, we don't need more than 4.  
 \
 FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate there using Docket Desktop and download these files in original configuration.
-
-
-
-
-
-## References
