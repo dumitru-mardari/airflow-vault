@@ -122,8 +122,7 @@ key - test123
 ```
 \
 Now, you've completed configuring your HashiCorp Vault instance. In the next step, we will start configuring Apache Airflow to securely retrieve secrets from the Vault.  
-\  
-\
+  
 ## Configuring Apache Airflow
 ```
 
