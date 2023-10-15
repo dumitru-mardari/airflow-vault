@@ -1,11 +1,13 @@
-# Apache Airflow with HashiCorp Vault integration
-This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2. The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager. AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing. Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose files. The steps to replicate this project are described below.
+# Apache Airflow ETL with HashiCorp Vault integration
+This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2. The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager. AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing. The processed data is then loaded in Amazon Redshift DWH service. Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose. The steps to replicate this project are described below.
 ## Contents
 | Part | Title |
 |-|-|
 |1| Setup environment |
 |2| Configuring HashiCorp Vault deployment using Docker |
 |3| Configuring Apache Airflow |
+|4| Create Extract, Transform and Load task using DAGs |
+
 ## Setup environment
 - Virtual machine - Linux - Linux Mint 21.2 Distribution
 - RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD (80 GB not enough), GPU 8GB, Network connection: NAT
@@ -187,4 +189,17 @@ FYI: You can also parse parameters to `docker-compose.yaml` under common or serv
 \
 18. Under `[celery]`, change `worker_concurrency = 4` to define the amount of tasks a celery worker can take. For development purpose, we don't need more than 4.  
 \
-FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate there using Docket Desktop and download these files in original configuration.
+19. After you have inserted content from this repository to your `airflow.cfg`, `webserver_config.py` and `docker-compose.yaml` OR you have made necessary parameter value changes, you can now deploy your airflow multi-container.
+```
+/apache-airflow$ docker compose up
+```
+\
+The Airflow UI should be accessible at: http://localhost:8080/ . Login using default credentials username: `airflow` and password: `airflow` .  
+\
+FYI 1: For troubleshooting purposes, you can disable the mounting of `airflow.cfg` and `webserver_config.py` in `docker-compose.yaml` by commenting them out with `#` . You can then deploy the airflow multi-container from `/apache-airflow$` dir using `docker compose up` command and inspect the default versions of those files within the `airflow-webserver` container, using Docker Desktop. If `aiflow.cfg` wasn't mounted as a volume in `docker-compose.yaml`, the container will create its own `airflow.cfg` with default parameter values. The `airflow.cfg` is located in `<airflow-webserver-container>/opt/airflow/airflow.cfg` . You can navigate there using Docket Desktop and download these files in original configuration.  
+\
+Now, we've setup the Airflow service and we're ready to create the necessary DAGs for the ETL workflow (Extract data from S3, Transform data using Python, Load data into Amazon Redshift DWH).  
+\
+## Create Extract, Transform and Load task using DAGs
+
+
