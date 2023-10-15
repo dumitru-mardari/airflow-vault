@@ -26,8 +26,8 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 ```
 $ mkdir vault
 ```
-
-  
+</br>
+</br>
 2. Create "docker-compose.yml" file, "config" and "file" directories inside the /vault project directory.
 ```
 $ cd vault
