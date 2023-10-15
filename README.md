@@ -14,7 +14,7 @@ Part | Title
 - Installed Docker Compose v2.22.0
 - Installed Docker Desktop v4.24.0 (122432). CPU limit: 8 cores; Memory Limit: 4.5 GB, Swap: 1 GB
 - Installed Python 3.10.12 (`python3 --version`)  
-\
+
 ## Configuring HashiCorp Vault deployment using Docker
 1. Create a Vault project directory - `/vault`.
 ```
