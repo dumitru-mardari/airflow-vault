@@ -221,6 +221,6 @@ from airflow.models.connection import Connection # to create a connection at run
 \
 The DAGs must be placed in `/apache-airflow/dags` dir. New DAGs will be picked by airflow-scheduler within a 30sec time interval, as defined in `airflow.cfg`. When retrieving secrets from Vault using Airflow, the secrets are encrypted at runtime and cannot be printed out for inspection (execpt for public key). Therefore, you might wish to modify your policies for specific users to restrict access to logs and connections. Since it is possible to retrieve and store secrets at runtime (not in the scope of this project), users can then navigate the Airflow UI>Admin>Connections in order to inspect the KEYS and SECRET KEYS.  
 \
-The DAG that defines the ETL workflow for this project is stored in `/dags` .
+The DAG that defines the ETL workflow for this project is stored in `/apache-airflow/dags` .
 
 
