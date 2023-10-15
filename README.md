@@ -11,8 +11,8 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 |   3  | Configuring Apache Airflow |
 |   4  | References |
 
-\
-\
+\  
+
 ## Setup environment
 - Virtual machine - Linux - Linux Mint 21.2 Distribution
 - RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD (80 GB not enough), GPU 8GB, Network connection: NAT
