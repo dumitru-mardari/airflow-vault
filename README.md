@@ -19,8 +19,8 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 
 # ATTENTION! CURRENTLY IN DEVELOPMENT! DO NOT REPRODUCE STEPS!
 
-## Configuring HashiCorp Vault deployment using Docker
-
+## Configuring HashiCorp Vault deployment using Docker  
+\
 1. Create a Vault project directory - `/vault`.
 ```
 $ mkdir vault
