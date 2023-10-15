@@ -53,9 +53,9 @@ $ cd vault
 /vault$ docker compose up
 ```
 \
-7. After a while, Vault UI should be accessible in browser at: http://localhost:8200 . Access it.
+7. After a while, Vault UI should be accessible in browser at: http://localhost:8200 . Access it.  
 \
-8. Set number of "Key shares" and "Key threshold" to your preference (e.g., 1 and 1). Initialize it.
+8. Set number of "Key shares" and "Key threshold" to your preference (e.g., 1 and 1). Initialize it.  
 \
 9. IMPORTANT! Copy your "Initial root token" and "Key 1 + any other keys" to a safe place. You can optionally download keys or save them to your host environment variables.
 ```
@@ -63,15 +63,15 @@ $ export VAULT_TOKEN=<token>
 $ export VAILT_UNSEAL_KEY1=<key1>
 ```
 \
-10. Continue to unseal the vault by providing the "Unseal Key Portion".
+10. Continue to unseal the vault by providing the "Unseal Key Portion".  
 \
-11. Login to your vault using the initial root token (token of your vault's root user).
+11. Login to your vault using the initial root token (token of your vault's root user).  
 \
-12. You might want to have access to vault using username/password combination, instead of token. For this, go to "Access" in the left pane in Vault's UI and click "Enable new method +" on the right side. Choose "Username & Password" option. We will also need it later for setting up a user for Apache Airflow. Click Next, "Enable Method" and "Update Options".
+12. You might want to have access to vault using username/password combination, instead of token. For this, go to "Access" in the left pane in Vault's UI and click "Enable new method +" on the right side. Choose "Username & Password" option. We will also need it later for setting up a user for Apache Airflow. Click Next, "Enable Method" and "Update Options".  
 \
-13. Click the newly appeared "userpass/" authentication method and "Create user +" from the window's right side. Insert username "root" and password "<your-password-of-choice>", and click "Save".
+13. Click the newly appeared "userpass/" authentication method and "Create user +" from the window's right side. Insert username "root" and password "<your-password-of-choice>", and click "Save".  
 \
-14. Create another user for Apache Airflow using the same procedure. Username "airflow" and pass "airflow2023!" will be used in further steps.
+14. Create another user for Apache Airflow using the same procedure. Username "airflow" and pass "airflow2023!" will be used in further steps.  
 \
 15. Now, we want to create new policies for our root and airflow users. Get back to main menu and click "Policies". Click "Create ACL Policy". For root user, name the policy "root-policy" and provide the following JSON code for the policy:
 ```
@@ -96,7 +96,7 @@ vault write auth/userpass/users/root/policies policies="root-policy"
 vault write auth/userpass/users/airflow/policies policies="airflow"
 ```
 \
-18. Now, we need to create the "airflow" secrets engine where we can store our secret connections (e.g., AWS Keys and Secret Keys) and variables. Click on "Secrets engines" from the left pane and "Enable new engine +". Select "KV" engine and click Next. Define "airflow" as Path and click Next.
+18. Now, we need to create the "airflow" secrets engine where we can store our secret connections (e.g., AWS Keys and Secret Keys) and variables. Click on "Secrets engines" from the left pane and "Enable new engine +". Select "KV" engine and click Next. Define "airflow" as Path and click Next.  
 \
 19. Now, we can put our first connections and variables. For this purpose, we will insert a "smtp_default" secret connection, an AWS Key pair "aws_conn" connection and a "test_var" variable. Now, click on "Create secret +". For "Path of this secret", type "connections/aws_conn". In "Secret data", type the following:
 ```
@@ -121,8 +121,8 @@ port - 465
 key - test123
 ```
 \
-Now, you've completed configuring your HashiCorp Vault instance. In the next step, we will start configuring Apache Airflow to securely retrieve secrets from the Vault.
-\
+Now, you've completed configuring your HashiCorp Vault instance. In the next step, we will start configuring Apache Airflow to securely retrieve secrets from the Vault.  
+\  
 \
 ## Configuring Apache Airflow
 ```
