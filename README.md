@@ -17,9 +17,11 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 \
 ## Configuring HashiCorp Vault deployment using Docker
 1. Create a Vault project directory - `/vault`.
+<pre><code>
 ```bash
 $ mkdir vault
 ```
+</code></pre>
 \
 2. Create `docker-compose.yml` file, `/config` and `/file` directories inside the `/vault` project directory.
 ```
