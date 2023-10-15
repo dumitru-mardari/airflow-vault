@@ -10,7 +10,7 @@ This is my project that integrates HashiCorp Vault as secrets-backend for Apache
 |3| Configuring Apache Airflow |
 |4| References |
 
-<br><br/>
+</br><br/>
 
 ## Setup environment
 - Virtual machine - Linux - Linux Mint 21.2 Distribution
