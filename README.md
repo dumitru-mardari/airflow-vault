@@ -38,7 +38,7 @@ $ cd vault
 /vault$ touch vault.hcl
 ```
 \
-4. Replace the contents of Vault's docker-compose.yml and vault.hcl with the ones from this repository.
+4. Replace the contents of Vault's docker-compose.yml and vault.hcl with the ones from this repository.  
 \
 5. Make sure that the /vault folder is having proper permissions and ownership. You must have full read and write access to all files in /vault dir, and have ownership over them. Right click /vault dir and check Properties>Permissions. If these are not correct, you can change them using the following commands.
 ```
