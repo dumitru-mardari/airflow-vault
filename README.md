@@ -10,7 +10,7 @@ Part | Title
 
 ## 1. Environment setup
 - Virtual machine - Linux x86_64 Architecture - Linux Mint 21.2 Distribution
-- Allocated RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD (80 GB not enough), GPU 8GB, Network connection: NAT
+- Allocated RAM 16 GB, 4 Processors x 2 Cores = 8 Total Cores, 120 GB SSD, GPU 8GB, Network connection: NAT
 - Installed Docker Compose v2.22.0
 - Installed Docker Desktop v4.24.0 (122432). CPU limit: 8 cores; Memory Limit: 4.5 GB, Swap: 1 GB
 - Installed Python 3.10.12
