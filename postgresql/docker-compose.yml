@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  postgres-upload:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: airflow
+      POSTGRES_DB: admin
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - vault_etl_net
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "admin"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      #restart: always
+
+networks:
+  vault_etl_net:
+    external: true

@@ -1,0 +1,43 @@
+# Syntax version of docker compose file
+version: '3.8'
+# Services the docker compose will deploy
+services:
+  # vault service
+  vault:
+    # image from docker hub that it will deploy
+    image: hashicorp/vault
+    # container name that will be listed in Docker Desktop or using "docker ps" command
+    #entrypoint: docker exec -u 0 -it vault vault operator unseal x5zyNFixa2PUzeFHoSFGxN5D1wzVyNXlsQ4S4xKEmHw=
+    container_name: vault
+    # mapping of ports between the host machine and docker container
+    ports:
+      - 8200:8200
+    # specifying any environment variables for container
+    environment:
+      #127.0.0.1 = localhost
+      - VAULT_ADDR=http://127.0.0.1:8200
+    # mapping of directories from host machine to docker container. (.) - meaning current vault directory (./host_path:/container_path)
+    volumes:
+      - ./file:/vault/file/
+      - ./config:/vault/config
+    # locks specific memory segments from being swapped
+    cap_add:
+      - IPC_LOCK
+    # specify vault.hcl config location. alternatively, you can delete this line and change the config line in volumes to "- ./config/vault.hcl:/vault/config/vault.hcl"
+    command: vault server -config=/vault/config/vault.hcl && chmod +x /vault/config/unseal.sh && vault/config/unseal.sh
+    # assign this to the network called etl_net. you can choose your own network name
+    networks:
+      - etl_net
+    # restart on startup
+    restart: always
+  unsealer:
+    image: alpine
+    command: sh -c 'apk add curl jq && root/unseal.sh'
+    volumes:
+      - ./config/unseal.sh:/root/unseal.sh:ro
+    networks:
+      - etl_net
+# define etl_net network for this docker compose
+networks:
+  etl_net:
+    driver: bridge
