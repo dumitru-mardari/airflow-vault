@@ -1,5 +1,5 @@
-# Apache Airflow ETL with HashiCorp Vault integration
-This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2. The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager. AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing. The processed data is then loaded in Amazon Redshift DWH service. Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose. The steps to replicate this project are described below.
+# Apache Airflow ETL with HashiCorp Vault integration ==IN PROGRESS==
+This is my project that integrates HashiCorp Vault as secrets-backend for Apache Airflow 2.7.2. The secrets (e.g., AWS connections, variables) are stored in the HashiCorp Vault secrets-manager. AWS Connections are used for connection to AWS Cloud for the purpose of sensing new files (.csv) being uploaded to S3 Bucket repositories, and for retrieval of those files from S3 Buckets for further data pre-processing. The processed data is then loaded into MongoDB NoSQL database and PostgreSQL Database. Both - Apache Airflow and HashiCorp Vault - are deployed using Docker Compose. The steps to replicate this project are described below.
 ## Contents
 Part | Title
 -|-
