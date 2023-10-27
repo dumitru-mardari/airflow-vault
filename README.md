@@ -7,7 +7,9 @@ Part | Title
 1| Environment setup 
 2| Configuring HashiCorp Vault deployment using Docker 
 3| Configuring Apache Airflow 
-4| Create Extract, Transform and Load task using DAGs 
+4| Create Extract, Transform and Load task using DAGs
+5| Options for improvements
+6| Remarks
 
 ## 1. Environment setup
 - Virtual machine - Linux x86_64 Architecture - Linux Mint 21.2 Distribution
@@ -207,21 +209,41 @@ In this chapter, we create the DAG for defining the ETL workflow described above
 
 The necessary imports are described below:
 ```python
-import os # to rename downloaded file from S3 Bucket
-import psycopg2 # to connect to PostgreSQL in case of uploading data to a local DB instead of AWS Redshift DWH
-import psycopg2.extras # to access the data in the dataframe using cursor object
-import logging # for logging and debugging purposes
-from airflow import DAG # DAG
-from airflow.operators.python import PythonOperator # Python operator to manipulate data
-from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor # AWS S3 Sensor sensing for existing or new files in a S3 bucket
-from airflow.providers.amazon.aws.hooks.s3 import S3Hook # AWS S3 Hook for hooking the file
-from datetime import datetime, timedelta # for working with data
-from airflow.hooks.base_hook import BaseHook # to retrieve secret AWS connection credentials from HashiCorp Vault
-from airflow.models.connection import Connection # to create a connection at runtime
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from datetime import datetime, timedelta
+# Vault connections
+from airflow.hooks.base_hook import BaseHook
+# S3 file sensing and download
+from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+# PostgreSQL
+import psycopg2
+from airflow.operators.postgres_operator import PostgresOperator
+from sqlalchemy import create_engine
+# MongoDB
+from airflow.providers.mongo.hooks.mongo import MongoHook
 ```
 \
-The DAGs must be placed in `/apache-airflow/dags` dir. New DAGs will be picked by airflow-scheduler within a 30sec time interval, as defined in `airflow.cfg`. When retrieving secrets from Vault using Airflow, the secrets are encrypted at runtime and cannot be printed out for inspection (execpt for public key). Therefore, you might wish to modify your policies for specific users to restrict access to logs and connections. Since it is possible to retrieve and store secrets at runtime (not in the scope of this project), users can then navigate the Airflow UI>Admin>Connections in order to inspect the KEYS and SECRET KEYS.  
+The DAGs must be placed in `/apache-airflow/dags` dir. New DAGs will be picked by airflow-scheduler within a 30sec time interval, as defined in `airflow.cfg`. When retrieving secrets from Vault using Airflow, the secrets are encrypted at runtime and cannot be printed out for inspection (except for public keys). Therefore, you might wish to modify your Airflow policies to restrict access to logs and connections for specific users. Since it is possible to retrieve and store secrets at runtime (not in the scope of this project), users can then navigate the Airflow UI>Admin>Connections in order to inspect the KEYS and SECRET KEYS.
+\
+![Image Alt Text](https://raw.githubusercontent.com/dumitru-mardari/airflow-vault/main/images/workflow.png)\
 \
 The DAG that defines the ETL workflow for this project is stored in `/apache-airflow/dags` .
 
+1. `t1_test_sensor` Continous sensor for sensing a file withing an S3 Bucket. Task is marked as "success" as soon as file is found, otherwise "running'.
+2. `t2_test_download` Task to download the file to the backend storage of Airflow `/apache-airflow/data`.
+3. `t3_rename_file` Task to rename downloaded file since Airflow downloads the file and names it arbitrarily.
+4. `t4_split` Task to split file (.csv) into multiple parts. In our case, the task splits "test" dataset used for fitting ML models. The dataset needs to be split into 5 equal smaller datasets.
+5. `t5_tests_to_json` MongoDB requires data to be uploaded in BSON formatted JSON files. This task transforms Pandas dataframes into BSON formatted data and stores it locally in Airflow storage.
+6. `t6_1_upload_mongo` Upload of JSON files to MongoDB.
+7. `t6_2_1_create_tables` This step is optional. Here, tables are created in PostgreSQL before data is uploaded to the database. If tables exist already in the database, any records in those tables will be wiped before new data will be uploaded.
+8. `t6_2_2_load_data` Upload of data to PostgreSQL.
+
+## 5. Options for improvement
+- Parse the data between DAG tasks using XCOM instead of saving data locally.
+- [Optional] Define all containers (PostgreSQL, MongoDB, etc.) inside one docker-compose multi-container.
+
+## 6. Remarks
+- The main network is defined in the Vault container since it is the most persistent micro-service.
 
